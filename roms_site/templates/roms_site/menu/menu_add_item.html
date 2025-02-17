@@ -1,0 +1,9 @@
+{% extends 'roms_site/base.html' %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить позицию</button>
+</form>
+{% endblock content %}

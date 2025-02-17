@@ -1,0 +1,29 @@
+{% block content %}
+{% if not menu_items %}
+    <div>
+        Позиций в меню нет. Добавьте новые позиции в меню!
+    </div>
+{% else %}
+    <table border="2px">
+        <thead>
+            <td>N</td>
+            <td>Наименование</td>
+            <td>Описание</td>
+            <td>Стоимость</td>
+        </thead>
+    {% for item in menu_items %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.price}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+<div>
+    <form action="{% url 'menu_add_item' %}" method="get">
+        <input type="submit" value="Добавить позицию">
+    </form>
+</div>
+{% endblock content %}
