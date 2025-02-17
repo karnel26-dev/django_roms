@@ -1,0 +1,50 @@
+{% extends 'roms_site/base.html' %}
+
+{% block content %}
+{% if not orders %}
+    <div>
+        Сегодня заказов нет!
+    </div>
+{% else %}
+<div class="orders">
+    <table border="2px">
+        <thead>
+            <td>№ заказа</td>
+            <td>№ стола</td>
+            <td>Состав заказа</td>
+            <td>Стоимость</td>
+            <td>Комментарий</td>
+            <td>Дата и время заказа</td>
+            <td>Статус</td>
+            <td>Дата и время именения статуса</td>
+        </thead>
+        {% for order in orders %}
+            <tr>
+                <td>
+                    <a href="{% url 'orders_detail' pk=order.id %}">{{ order.id }}</a>
+                </td>
+                <td>{{ order.table_number }}</td>
+                <td>
+                    <ol>
+                        {% for item in order.items.all %}
+                            <li>{{ item.name }} - {{ item.price }}</li>
+                        {% endfor %}
+                    </ol>
+                </td>
+                <td>{{ order.total_price }}</td>
+                <td>{{ order.comment }}</td>
+                <td>{{ order.created_at }}</td>
+                <td>{{ order.get_status_display }}</td>
+                <td>{{ order.updated }}</td>
+
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}
+<div>
+    <form action="{% url 'orders_add' %}" method="get">
+        <input type="submit" value="Создать заказ">
+    </form>
+</div>
+{% endblock content %}
